@@ -15,7 +15,6 @@ function mapOnClick(lat, lng) {
             $("#title").text(address["Street"] + ", " + address["House"]);
             $("#subtitle").text(address["City"] + ", " + address["State"]);
             $("#postcode").text(address["Postcode"]);
-            
             if (data.repair){
                 $("#info_placeholder").hide();
                 $("#info").show();

@@ -22,31 +22,31 @@
 </head>
 
 <body>
-@*<div>@Html.DropDownList("Years", new SelectList(Model.AddressDictionary.Keys), new {onchange= "populateWithYear(this)" })</div>*@
+    @*<div>@Html.DropDownList("Years", new SelectList(Model.AddressDictionary.Keys), new {onchange= "populateWithYear(this)" })</div>*@
 
-<div id="map"></div>
-    
-<div id="autocomplit_Container">
-    <div id="auto">
-        <input id="addressInput"/>
+    <div id="map"></div>
+
+    <div id="autocomplit_Container">
+        <div id="auto">
+            <input id="addressInput" />
+        </div>
+        <div id="layers_btn">
+            <img src="~/Content/images/layers.png" />
+        </div>
     </div>
-    <div id="layers_btn">
-        <img src="~/Content/images/layers.png"/>
-    </div>
-</div>
-    
 
 
-<div id="sidebarContainer" style="display: none">
+
+    <div id="sidebarContainer" style="display: none">
         <div id="loading_placeholder" style="display: none">
             <div class="blocker"></div>
             <div class="loader"></div>
         </div>
-    <a href="#" class="close-thik" onclick="$('#sidebarContainer').hide()"></a>
-    
-   
+        <a href="#" class="close-thik" onclick="$('#sidebarContainer').hide()"></a>
 
-    <div id="repairProperties" class="left_child">
+
+
+        <div id="repairProperties" class="left_child">
             <div>
                 <h2 id="title">ул. Баумана, 31А</h2>
                 <h3 id="subtitle">Екатеринбург, Свердловская обл.</h3>
@@ -105,59 +105,58 @@
             </div>
         </div>
         <div id="yearsInfo" class="left_child">
-            <ul id="years" class="list_years">
-            </ul>
+            <ul id="years" class="list_years"></ul>
         </div>
-</div>
+    </div>
 
-<script>
-    function openTab(id) {
-        $(".tab").hide();
-        $("#" + id).show();
-        $(".btn_tab").toggleClass("active");
-    }
+    <script>
+        function openTab(id) {
+            $(".tab").hide();
+            $("#" + id).show();
+            $(".btn_tab").toggleClass("active");
+        }
 
-    $( "#layers_btn" ).click(function() {
-        $(this).toggleClass("active_btn"); 
-    });
-</script>
-
-<script>
-    var targetMarker = null;
-    
-    var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-            maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        $("#layers_btn").click(function () {
+            $(this).toggleClass("active_btn");
         });
-    
-    var latlng = new L.LatLng(56.839360, 60.608925);
-    var map = new L.Map('map', { center: latlng, zoom: 15, layers: [tiles] });
+    </script>
 
-    var markers = new L.MarkerClusterGroup();
-    var markersList = [];
+    <script>
+        var targetMarker = null;
 
- 
+        var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            });
 
-    function getRandomLatLng(map) {
-        var bounds = map.getBounds(),
-            southWest = bounds.getSouthWest(),
-            northEast = bounds.getNorthEast(),
-            lngSpan = northEast.lng - southWest.lng,
-            latSpan = northEast.lat - southWest.lat;
+        var latlng = new L.LatLng(56.839360, 60.608925);
+        var map = new L.Map('map', { center: latlng, zoom: 15, layers: [tiles] });
 
-        return new L.LatLng(
-            southWest.lat + latSpan * Math.random(),
-            southWest.lng + lngSpan * Math.random());
-    }
-    map.addLayer(markers);
+        var markers = new L.MarkerClusterGroup();
+        var markersList = [];
 
-    map.on('click',
-        function(e) {
-            getRepairInfo(map, e.latlng.lat, e.latlng.lng);
-        });
 
-</script>
+        function getRandomLatLng(map) {
+            var bounds = map.getBounds(),
+                southWest = bounds.getSouthWest(),
+                northEast = bounds.getNorthEast(),
+                lngSpan = northEast.lng - southWest.lng,
+                latSpan = northEast.lat - southWest.lat;
+
+            return new L.LatLng(
+                southWest.lat + latSpan * Math.random(),
+                southWest.lng + lngSpan * Math.random());
+        }
+
+        map.addLayer(markers);
+
+        map.on('click',
+            function (e) {
+                getRepairInfo(map, e.latlng.lat, e.latlng.lng);
+            });
+
+    </script>
 
 </body>
 

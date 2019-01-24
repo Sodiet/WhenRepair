@@ -9,7 +9,11 @@ namespace WhenRepair.Application
     {
         private static readonly HttpClient client = new HttpClient
         {
-            BaseAddress = new Uri("http://nominatim.openstreetmap.org/search")
+            BaseAddress = new Uri("http://nominatim.openstreetmap.org/search"),
+            DefaultRequestHeaders =
+            {
+                {"User-Agent", "WhenRepair/1.0.0" }
+            }
         };
 
         public Task<Address> Get(string latitude, string longitude)
@@ -45,7 +49,7 @@ namespace WhenRepair.Application
             return json.Count != 0 ? new Address
             {
                 City = json.First["address"]["city"]?.ToString() ?? "",
-                Street = json.First["address"]["road"]?.ToString() ?? "",
+                Street = json.First["address"]["road"]?.ToString() ?? json.First["address"]["pedestrian"]?.ToString(),
                 House = json.First["address"]["house_number"]?.ToString() ?? "",
                 Postcode = json.First["address"]["postcode"]?.ToString() ?? "",
                 State = json.First["address"]["state"]?.ToString() ?? ""

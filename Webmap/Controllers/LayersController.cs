@@ -11,7 +11,7 @@ namespace Webmap.Controllers
 
         private IAddressInfoRepository Get()
         {
-            return new MongoAddressInfoRepository(@"mongodb://repairs-db:KW4KrvNhq6bGJlblPQMlKTUsx3N53HI8Cm9nxs6KSMlHT7QJ5ZYdNZH9826BROUI4BMXH3tIIiZVvKIqOORIXA==@repairs-db.documents.azure.com:10255/?ssl=true&replicaSet=globaldb");
+            return new MongoAddressInfoRepository();
         }
             
 
