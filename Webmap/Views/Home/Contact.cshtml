@@ -140,24 +140,24 @@
     var markersGreen = new L.MarkerClusterGroup({
         iconCreateFunction: function (cluster) {
             return new L.DivIcon({
-                html: '<div><span>' + childCount + '</span></div>',
-                className: 'marker-cluster-small', iconSize: new L.Point(40, 40)
+                html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                className: 'marker-cluster marker-cluster-small', iconSize: new L.Point(40, 40)
             });
         }
         });
     var markersYellow = new L.MarkerClusterGroup({
         iconCreateFunction: function (cluster) {
             return new L.DivIcon({
-                html: '<div><span>' + childCount + '</span></div>',
-                className: 'marker-cluster-medium', iconSize: new L.Point(40, 40)
+                html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                className: 'marker-cluster marker-cluster-medium', iconSize: new L.Point(40, 40)
             });
         }
     });
     var markersRed = new L.MarkerClusterGroup({
         iconCreateFunction: function (cluster) {
             return new L.DivIcon({
-                html: '<div><span>' + childCount + '</span></div>',
-                className: 'marker-cluster-big', iconSize: new L.Point(40, 40)
+                html: '<div><span>' + cluster.getChildCount() + '</span></div>',
+                className: 'marker-cluster marker-cluster-large', iconSize: new L.Point(40, 40)
             });
         }
     });
