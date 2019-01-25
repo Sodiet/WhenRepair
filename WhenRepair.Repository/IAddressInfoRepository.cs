@@ -8,6 +8,9 @@ namespace WhenRepair.Repository
 	{
 		Task<IDictionary<string, int>> GetYears();
 		Task<List<GeoCoordinate>> GetBuildingsByYears(string years);
-	    Task Save(string id, RepairData data);
-	}
+		
+		Task Save(string id, RepairData data);
+
+        Task<List<GeoCoordinate>> GetInfoLayerRemote();
+    }
 }

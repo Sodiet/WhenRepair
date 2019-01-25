@@ -10,11 +10,13 @@ function mapOnClick(lat, lng) {
             }
             $("#sidebarContainer").show();
             $(".left_child").hide();
+            $("#menu").hide();
             $("#repairProperties").show();
             var address = data.address;
             $("#title").text(address["Street"] + ", " + address["House"]);
             $("#subtitle").text(address["City"] + ", " + address["State"]);
             $("#postcode").text(address["Postcode"]);
+            
             if (data.repair){
                 $("#info_placeholder").hide();
                 $("#info").show();
@@ -74,6 +76,79 @@ function selectLayer(number) {
         });
 }
 
+menu = [
+    "years",
+    "info"
+];
+
+function selectMenu(param) {
+
+    switch (param) {
+        case 0:
+            $(".left_child").hide();
+            $("#menuEntries").hide();
+            $("#yearsInfo").show();
+            break;
+
+        case 1:
+            $(".left_child").hide();
+            $("#menuEntries").hide();
+            $("#testInfo").show();
+            break;
+    }
+}
+
+function selectInfoLayer() {
+        $("#loading_placeholder").show();
+        //api.get("Layers/GetInfoLayer")
+                $("#loading_placeholder").hide();
+                coord = [
+                    {
+                        "Latitude" : "56.837500",
+                        "Longitude" : "60.613203",
+                        "Debt" : "0"
+                    },
+                    {
+                        "Latitude" : "56.838219",
+                        "Longitude": "60.611162",
+                        "Debt": "0"
+                    },
+                    {
+                        "Latitude" : "56.838694",
+                        "Longitude": "60.610303",
+                        "Debt": "3"
+                    },
+                    {
+                        "Latitude" : "56.838503",
+                        "Longitude": "60.612221",
+                        "Debt": "3"
+                    }];
+
+                markersGreen.clearLayers();
+                markersRed.clearLayers();
+                markersYellow.clearLayers();
+            for (var k = 0; k < coord.length; k++) {
+
+                var latLng = new L.LatLng(coord[k].Latitude, coord[k].Longitude);
+                var m = new L.Marker(latLng);
+
+                
+                if (coord[k].Debt < 1) {
+                    markersList[0].push(m);
+                    markersGreen.addLayer(m);
+                }
+                else if (coord[k].Debt < 2) {
+                    markersList[1].push(m);
+                    markersYellow.addLayer(m);
+                }
+                else {
+                    markersList[2].push(m);
+                    markersRed.addLayer(m);
+                }
+            }
+            //return false;
+}
+
 $( function() {
     var cache = {};
     $("#addressInput").autocomplete({
@@ -109,10 +184,25 @@ $( function() {
             // if (data.length > 0)
             //     selectLayer(0);
         });
-    
+
+
+    api.get("Layers/GetInfo", {})
+        .then(function (data) {
+            var $info = $("#test");
+            for (var i = 0; i < data.length; i++) {
+                $info.append($("<li class='list_item active' onclick='selectInfoLayer()'>" + data[i] + "</li>"));
+            }
+        });
+
+    for (var i = 0; i < menu.length; i++) {
+        $("#menuEntries").append($("<li class='list_item active' onclick='selectMenu(" + i + ")'>" + menu[i] + "</li>"));
+    }
+
     $("#layers_btn").on('click', function () {
         $("#sidebarContainer").show();
         $(".left_child").hide();
-        $("#yearsInfo").show();
-    });
+        $("#menuEntries").show();
+        //$("#yearsInfo").show();
+		//$("#testInfo").show();
+	});
 } );

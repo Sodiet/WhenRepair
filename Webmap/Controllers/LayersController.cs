@@ -38,6 +38,17 @@ namespace Webmap.Controllers
             return Json(years, JsonRequestBehavior.AllowGet);
         }
 
+        public async Task<ActionResult> Getinfo()
+        {
+
+            var info = new[]
+            {
+                "Задолженности"
+            };
+
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
         public async Task<ActionResult> GetLayer(string years)
         {
 //            var geoCoordinate = new[]
@@ -68,6 +79,13 @@ namespace Webmap.Controllers
 //            };
 
             var geoCoordinates = await Get().GetBuildingsByYears(years);
+
+            return Json(geoCoordinates, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetInfoLayer()
+        {
+            var geoCoordinates = await Get().GetInfoLayerRemote();
 
             return Json(geoCoordinates, JsonRequestBehavior.AllowGet);
         }

@@ -63,5 +63,35 @@ namespace WhenRepair.Repository
             await Repair.DeleteOneAsync(Builders<RepairInfo>.Filter.Where(info => info.Key == id));
             await Repair.InsertOneAsync(new RepairInfo { Key = id, RepairData = data });
         }
+		
+		        public async Task<List<GeoCoordinate>> GetInfoLayerRemote()
+        {
+            return new List<GeoCoordinate>
+                        {
+                            new GeoCoordinate()
+                            {
+                                Latitude = "56.837500",
+                                Longitude = "60.613203"
+
+                            },
+                            new GeoCoordinate()
+                            {
+                                Latitude = "56.838219",
+                                Longitude = "60.611162"
+                            },
+
+                            new GeoCoordinate()
+                            {
+                                Latitude = "56.838694",
+                                Longitude = "60.610303"
+                            },
+
+                            new GeoCoordinate()
+                            {
+                                Latitude = "56.838503",
+                                Longitude = "60.612221"
+                            },
+                        };
+        }
     }
 }
